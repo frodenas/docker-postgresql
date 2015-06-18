@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd /var/lib/postgresql
+
 # Initialize data directory
 DATA_DIR=/data
 if [ ! -f $DATA_DIR/postgresql.conf ]; then

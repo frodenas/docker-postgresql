@@ -4,9 +4,11 @@ PASS=${POSTGRES_PASSWORD:-$(pwgen -s -1 16)}
 DB=${POSTGRES_DBNAME:-}
 EXTENSIONS=${POSTGRES_EXTENSIONS:-}
 
+cd /var/lib/postgresql
 # Start PostgreSQL service
 sudo -u postgres /usr/lib/postgresql/9.3/bin/postgres -D /data &
-while ! nc -vz localhost 5432; do sleep 1; done
+
+while ! sudo -u postgres psql -q -c "select true;"; do sleep 1; done
 
 # Create user
 echo "Creating user: \"$USER\"..."
