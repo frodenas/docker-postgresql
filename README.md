@@ -4,7 +4,7 @@ A Dockerfile that produces a Docker Image for [PostgreSQL](http://www.postgresql
 
 ## PostgreSQL version
 
-The `master` branch currently hosts PostgreSQL 9.3.
+The `master` branch currently hosts PostgreSQL 9.4.
 
 Different versions of PostgreSQL are located at the github repo [branches](https://github.com/frodenas/docker-postgresql/branches).
 
