@@ -3,7 +3,7 @@
   path: /instance_groups/name=docker/jobs/name=cf-containers-broker/properties/services/-
   value:
     name: 'postgresql94'
-    id: '2fd814ac-d1f7-4d4a-a4f7-d386cd8fd8e3'
+    id: '424c6c8c-14f8-11e7-9e95-a3f7e3e11dfc'
     description: 'PostgreSQL 9.4 service for application development and testing'
     bindable: true
     tags:
@@ -21,7 +21,7 @@
       id: docker-broker-postgresql94
       secret: ((docker_broker_postgresql94_secret))
     plans:
-    - id: '1a0efffc-eb45-4bf8-8ee3-a3c1a9a53151'
+    - id: '45a13980-14f8-11e7-ad79-57abe78068d0'
       name: 'free'
       container:
         backend: 'docker'
