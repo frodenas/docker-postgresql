@@ -1,5 +1,5 @@
 FROM frodenas/ubuntu
-MAINTAINER Ferran Rodenas <frodenas@gmail.com>
+LABEL maintainer="Ferran Rodenas <frodenas@gmail.com>, Dr Nic Williams <drnic@starkandwayne.com>"
 
 # Install PostgreSQL 9.6
 ENV PG_VERSION 9.6
