@@ -4,7 +4,7 @@ A Dockerfile that produces a Docker Image for [PostgreSQL](http://www.postgresql
 
 ## PostgreSQL version
 
-The `master` branch currently hosts PostgreSQL 9.4.
+The `master` branch currently hosts PostgreSQL 9.6.
 
 Different versions of PostgreSQL are located at the github repo [branches](https://github.com/frodenas/docker-postgresql/branches).
 
@@ -15,7 +15,8 @@ Different versions of PostgreSQL are located at the github repo [branches](https
 To create the image `frodenas/postgresql`, execute the following command on the `docker-postgresql` folder:
 
 ```
-$ docker build -t frodenas/postgresql .
+docker build -t frodenas/postgresql .
+docker build -t frodenas/postgresql:9.6 .
 ```
 
 ### Run the image
@@ -23,14 +24,14 @@ $ docker build -t frodenas/postgresql .
 To run the image and bind to host port 5432:
 
 ```
-$ docker run -d --name postgresql -p 5432:5432 frodenas/postgresql
+docker run -d --name postgresql -p 5432:5432 frodenas/postgresql
 ```
 
 The first time you run your container, a new user `pgadmin` with all privileges will be created with a random password.
 To get the password, check the logs of the container by running:
 
 ```
-docker logs <CONTAINER_ID>
+docker logs postgresql
 ```
 
 You will see an output like the following:
