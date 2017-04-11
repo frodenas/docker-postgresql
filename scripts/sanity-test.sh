@@ -7,7 +7,7 @@ set -x
 
 echo Sanity testing ${service_plan_image:-${image:-PostgreSQL}} with $credentials
 
-uri=$(echo $credentials | jq -r '.uri // ""')
+uri=$(echo $credentials | jq -r '.uri // .credentials.uri // ""')
 
 : ${uri:?missing from binding credentials}
 
