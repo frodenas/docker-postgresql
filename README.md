@@ -96,6 +96,16 @@ $ docker run -d \
     frodenas/postgresql
 ```
 
+### Use image to test PostgreSQL
+
+This image includes `sanity-test` command that can interact with a PostgreSQL service (for example, another running container of this image).
+
+```
+$ docker run --entrypoint '' \
+  -e credentials='{"uri":"postgres://user:pass@host:port/dbname"}' \
+  frodenas/postgresql sanity-test
+```
+
 ## Copyright
 
 Copyright (c) 2014 Ferran Rodenas. See [LICENSE](https://github.com/frodenas/docker-postgresql/blob/master/LICENSE) for details.
