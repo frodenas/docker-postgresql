@@ -106,6 +106,22 @@ $ docker run --entrypoint '' \
   frodenas/postgresql sanity-test
 ```
 
+### Deploy the image with BOSH
+
+If you have BOSH, with cloud config, you can deploy the image backed by a persistent disk volume managed by BOSH:
+
+```
+bosh2 deploy bosh-postgresql.yml --vars-store creds.yml
+```
+
+To get the randomly generated PostgreSQL username, password and database name:
+
+```
+bosh2 int creds.yml --path /postgresql-username
+bosh2 int creds.yml --path /postgresql-password
+bosh2 int creds.yml --path /postgresql-dbname
+```
+
 ## Copyright
 
 Copyright (c) 2014 Ferran Rodenas. See [LICENSE](https://github.com/frodenas/docker-postgresql/blob/master/LICENSE) for details.

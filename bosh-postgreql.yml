@@ -1,0 +1,74 @@
+---
+name: postgresql
+
+instance_groups:
+- name: docker
+  azs: [z1]
+  instances: 1
+  persistent_disk: 65536
+  vm_type: default
+  stemcell: default
+  networks: [{name: default}]
+  jobs:
+  - name: docker
+    release: docker
+    properties:
+      tcp_address: 0.0.0.0
+      tls_cacert: "((docker-tls.ca))"
+      tls_cert: "((docker-tls.certificate))"
+      tls_key: "((docker-tls.private_key))"
+  - name: containers
+    release: docker
+    properties:
+      containers:
+        - name: postgresql
+          image: "frodenas/postgresql"
+          tag: "9.6"
+          # tag: ((postgresql-image-tag))
+          # uncomment, and pass -v postgresql-image-tag=3.2
+          # OR, include -o bosh-op-select-tag.yml
+          bind_ports: ["5432:5432"]
+          bind_volumes: [/data]
+          env_vars:
+            - "POSTGRES_USERNAME=((postgresql-username))"
+            - "POSTGRES_PASSWORD=((postgresql-password))"
+            - "POSTGRES_DBNAME=((postgresql-dbname))"
+            - "POSTGRES_EXTENSIONS="
+
+variables:
+- name: docker-ca
+  type: certificate
+  options:
+    is_ca: true
+    common_name: dockerCA
+- name: docker-tls
+  type: certificate
+  options:
+    ca: docker-ca
+    common_name: docker
+    extended_key_usage:
+    - client_auth
+- name: postgresql-username
+  type: password
+- name: postgresql-password
+  type: password
+- name: postgresql-dbname
+  type: password
+
+stemcells:
+- alias: default
+  os: ubuntu-trusty
+  version: latest
+
+update:
+  canaries: 0
+  canary_watch_time: 1000-60000
+  update_watch_time: 1000-60000
+  max_in_flight: 32
+  serial: false
+
+releases:
+- name: docker
+  version: 30.0.0-rc.31
+  url: https://github.com/cloudfoundry-community/docker-boshrelease/releases/download/v30.0.0-rc.31/docker-30.0.0-rc.31.tgz
+  sha1: f39aa1143c3ee10c821b5f5adb59b76aa293fbb3
