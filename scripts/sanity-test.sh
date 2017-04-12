@@ -19,14 +19,16 @@ dbname=$(   echo "$uri" | sed 's|[[:blank:]]*postgres://\([^:]\+\):\([^@]\+\)@\(
 
 echo "Waiting for $uri to be ready (max ${wait_til_running}s)"
 for ((n=0; n<$wait_til_running; n++)); do
-  if [[ $(pg_isready -h $host -p $port -d $dbname) ]]; then
+  pg_isready -h $host -p $port -d $dbname
+  if [[ $? == 0 ]]; then
     echo "Postgres is ready"
     break
   fi
   print .
   sleep 1
 done
-if [[ ! $(pg_isready -h $host -p $port -d $dbname) ]]; then
+pg_isready -h $host -p $port -d $dbname
+if [[ $? != 0 ]]; then
   echo "Postgres not running"
   exit 1
 fi
