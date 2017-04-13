@@ -111,6 +111,7 @@ $ docker run --entrypoint '' \
 If you have BOSH, with cloud config, you can deploy the image backed by a persistent disk volume managed by BOSH:
 
 ```
+export BOSH_DEPLOYMENT=postgresql
 bosh2 deploy bosh-postgresql.yml --vars-store creds.yml
 ```
 
