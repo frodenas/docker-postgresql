@@ -110,8 +110,6 @@ You can also easily use `sanity-test` command to self-test a running container (
 
 ```
 docker run -d --name postgresql -p 5432:5432 -e POSTGRES_DBNAME=postgres frodenas/postgresql:9.6 && \
-  sleep 5 && \
-  docker logs postgresql && \
   docker exec -ti postgresql sanity-test
 ```
 
