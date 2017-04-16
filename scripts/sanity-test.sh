@@ -2,7 +2,10 @@
 
 set -e # fail fast
 
-: ${credentials:?required}
+if [[ ${credentials:-x} == "x" ]]; then
+  echo "No \$credentials provided, entering self-test mode."
+  credentials=$(cat /config/credentials.json)
+fi
 wait_til_running=${wait_til_running:-60}
 
 echo Sanity testing ${service_plan_image:-${image:-PostgreSQL}} with $credentials

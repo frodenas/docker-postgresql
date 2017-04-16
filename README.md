@@ -106,6 +106,36 @@ $ docker run --entrypoint '' \
   frodenas/postgresql sanity-test
 ```
 
+You can also easily use `sanity-test` command to self-test a running container (note `POSTGRES_DBNAME=name` is required):
+
+```
+docker run -d --name postgresql -p 5432:5432 -e POSTGRES_DBNAME=postgres frodenas/postgresql:9.6 && \
+  sleep 5 && \
+  docker logs postgresql && \
+  docker exec -ti postgresql sanity-test
+```
+
+The output will finish with:
+
+```
+No $credentials provided, entering self-test mode.
+Sanity testing PostgreSQL with {"hosthame":"localhost","host":"localhost","port":5432,"username":"pgadmin","password":"vD4RhsyRKq9GfAhJ","dbname":"postgres","uri":"postgres://pgadmin:vD4RhsyRKq9GfAhJ@localhost:5432/postgres"}
+Waiting for postgres://pgadmin:vD4RhsyRKq9GfAhJ@localhost:5432/postgres to be ready (max 60s)
+localhost:5432 - accepting connections
+Postgres is ready
+localhost:5432 - accepting connections
++ psql postgres://pgadmin:vD4RhsyRKq9GfAhJ@localhost:5432/postgres -c 'DROP TABLE IF EXISTS sanitytest;'
+NOTICE:  table "sanitytest" does not exist, skipping
+DROP TABLE
++ psql postgres://pgadmin:vD4RhsyRKq9GfAhJ@localhost:5432/postgres -c 'CREATE TABLE sanitytest(value text);'
+CREATE TABLE
++ psql postgres://pgadmin:vD4RhsyRKq9GfAhJ@localhost:5432/postgres -c 'INSERT INTO sanitytest VALUES ('\''storage-test'\'');'
+INSERT 0 1
++ psql postgres://pgadmin:vD4RhsyRKq9GfAhJ@localhost:5432/postgres -c 'SELECT value FROM sanitytest;'
++ grep storage-test
+ storage-test
+```
+
 ### Deploy the image with BOSH
 
 If you have BOSH, with cloud config, you can deploy the image backed by a persistent disk volume managed by BOSH:

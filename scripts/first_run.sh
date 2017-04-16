@@ -1,8 +1,17 @@
 #!/bin/bash
+
+set -e
+
 USER=${POSTGRES_USERNAME:-pgadmin}
 PASS=${POSTGRES_PASSWORD:-$(pwgen -s -1 16)}
 DB=${POSTGRES_DBNAME:-}
 EXTENSIONS=${POSTGRES_EXTENSIONS:-}
+
+echo First run of PostgreSQL, setting up users...
+
+mkdir -p /config
+echo "{\"hosthame\":\"localhost\",\"host\":\"localhost\",\"port\":5432,\"username\":\"$USER\",\"password\":\"$PASS\",\"dbname\":\"$DB\",\"uri\":\"postgres://$USER:$PASS@localhost:5432/$DB\"}" > /config/credentials.json
+echo /config/credentials.json
 
 cd /var/lib/postgresql
 # Start PostgreSQL service
